@@ -1,7 +1,9 @@
 package main
 
 import (
+	"errors"
 	"fmt"
+	"github.com/stemitom/go-snippet/pkg/models"
 	"html/template"
 	"net/http"
 	"strconv"
@@ -37,7 +39,17 @@ func (app *application) showSnippet(w http.ResponseWriter, r *http.Request) {
 		app.notFound(w)
 		return
 	}
-	_, err = fmt.Fprintf(w, "Display a specific snippet with ID %d...", id)
+
+	s, err := app.snippets.Get(id)
+	if err != nil {
+		if errors.Is(err, models.ErrNoRecord) {
+			app.notFound(w)
+		} else {
+			app.serverError(w, err)
+		}
+	}
+
+	_, err = fmt.Fprintf(w, "%v", s)
 	if err != nil {
 		return
 	}
@@ -52,7 +64,7 @@ func (app *application) createSnippet(w http.ResponseWriter, r *http.Request) {
 	title := "O snail"
 	content := "O snail\nClimb Mount Fuji,\nBut slowly, slowly!\n\n– Kobayashi Issa"
 	expires := "7"
-	
+
 	id, err := app.snippets.Insert(title, content, expires)
 	if err != nil {
 		app.serverError(w, err)
