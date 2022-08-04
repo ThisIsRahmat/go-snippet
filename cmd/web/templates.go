@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/stemitom/go-snippet/pkg/forms"
 	"github.com/stemitom/go-snippet/pkg/models"
 	"html/template"
 	"path/filepath"
@@ -9,6 +10,7 @@ import (
 
 type templateData struct {
 	CurrentYear int
+	Form        *forms.Form
 	Snippet     *models.Snippet
 	Snippets    []*models.Snippet
 }
