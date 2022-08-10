@@ -6,6 +6,8 @@ import (
 )
 
 var ErrNoRecord = errors.New("models: no matching record found")
+var ErrDuplicateEmail = errors.New("users: email address is already in use")
+var ErrInvalidCredentials = errors.New("users: credentials not valid")
 
 type Snippet struct {
 	ID      string
