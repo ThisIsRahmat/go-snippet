@@ -10,7 +10,7 @@ var ErrDuplicateEmail = errors.New("users: email address is already in use")
 var ErrInvalidCredentials = errors.New("users: credentials not valid")
 
 type Snippet struct {
-	ID      string
+	ID      int
 	Title   string
 	Content string
 	Created time.Time
